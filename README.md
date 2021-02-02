@@ -1,0 +1,2 @@
+# checkmania-game
+weird chess
