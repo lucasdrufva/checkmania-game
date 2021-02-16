@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node",
+"class": "ServerApi",
+"language": "GDScript",
+"path": "res://scripts/networking/ServerClient.gd"
+} ]
 _global_script_class_icons={
-
+"ServerApi": ""
 }
 
 [application]
