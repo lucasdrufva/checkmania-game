@@ -63,6 +63,16 @@ func _on_login_request_completed(result, response_code, headers, body):
 		ws.get_peer(1).put_packet(query.to_utf8())
 
 
+func makeMove(gameId: String, move):
+	var query = JSON.print({"action": "publish", "message": move})
+	if ws.get_peer(1).is_connected_to_host():
+		ws.get_peer(1).put_packet(query.to_utf8())
 
 
 
+
+
+
+func _on_Timer_timeout():
+	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
+	makeMove("", move)
