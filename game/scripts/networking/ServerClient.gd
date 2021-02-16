@@ -2,6 +2,8 @@ extends Node
 
 class_name ServerApi
 
+signal get_move(gameId, move)
+
 var ws = null
 var token = null
 
@@ -31,6 +33,7 @@ func _connection_closed(m):
 func _connection_error():
 	print("Connection error")
 
+
 func _process(_delta):
 	if ws.get_connection_status() == ws.CONNECTION_CONNECTING || ws.get_connection_status() == ws.CONNECTION_CONNECTED:
 		ws.poll()
@@ -38,13 +41,13 @@ func _process(_delta):
 		if ws.get_peer(1).get_available_packet_count() > 0 :
 			var test = ws.get_peer(1).get_packet()
 			print('recieve %s' % test.get_string_from_ascii ())
+			_parse_incomming_packet(test)
 
-func _on_btn_ping_pressed():
-	var str_time = str(OS.get_unix_time())
-	print("send time : " + str_time)
-
-	if ws.get_peer(1).is_connected_to_host():
-		ws.get_peer(1).put_var(str_time)
+func _parse_incomming_packet(data):
+	var json = JSON.parse(data.get_string_from_ascii())
+	if(json.result):
+		print("get move: ", json.result)
+		emit_signal("get_move", "", json.result)
 
 func login(username: String, password: String):
 	var query = JSON.print({"name": username, "password": password})
@@ -63,7 +66,7 @@ func _on_login_request_completed(result, response_code, headers, body):
 		ws.get_peer(1).put_packet(query.to_utf8())
 
 
-func makeMove(gameId: String, move):
+func make_move(gameId: String, move):
 	var query = JSON.print({"action": "publish", "message": move})
 	if ws.get_peer(1).is_connected_to_host():
 		ws.get_peer(1).put_packet(query.to_utf8())
@@ -75,4 +78,4 @@ func makeMove(gameId: String, move):
 
 func _on_Timer_timeout():
 	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
-	makeMove("", move)
+	make_move("", move)
