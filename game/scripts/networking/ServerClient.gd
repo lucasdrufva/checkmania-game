@@ -3,11 +3,14 @@ extends Node
 class_name ServerApi
 
 var ws = null
+var token = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("networking started")
+	print("ServerClient started")
+	$HTTPRequest.connect("request_completed", self, "_on_login_request_completed")
 	_connect("ws://localhost:8080/ws")
+	login("bob", "supersecret")
 
 func _connect(url):
 	ws = WebSocketClient.new()
@@ -42,3 +45,24 @@ func _on_btn_ping_pressed():
 
 	if ws.get_peer(1).is_connected_to_host():
 		ws.get_peer(1).put_var(str_time)
+
+func login(username: String, password: String):
+	var query = JSON.print({"name": username, "password": password})
+	
+	var headers = ["Content-Type: application/json"]
+	$HTTPRequest.request("http://localhost:3000/api/auth/login", headers, false, HTTPClient.METHOD_POST, query)
+
+#Login request complete
+func _on_login_request_completed(result, response_code, headers, body):
+	var json = JSON.parse(body.get_string_from_utf8())
+	token = json.result.token
+	print("JWT: ", token)
+	var query = JSON.print({"action": "auth", "token": token})
+	print(query)
+	if ws.get_peer(1).is_connected_to_host():
+		ws.get_peer(1).put_packet(query.to_utf8())
+
+
+
+
+
