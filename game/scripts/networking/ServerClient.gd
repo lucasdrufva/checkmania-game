@@ -74,8 +74,6 @@ func make_move(gameId: String, move):
 
 
 
-
-
 func _on_Timer_timeout():
 	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
 	make_move("", move)
