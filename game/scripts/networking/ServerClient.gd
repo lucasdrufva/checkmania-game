@@ -3,6 +3,7 @@ extends Node
 class_name ServerApi
 
 signal get_move(gameId, move)
+signal game_created(gameId)
 
 var ws = null
 var token = null
@@ -45,9 +46,14 @@ func _process(_delta):
 
 func _parse_incomming_packet(data):
 	var json = JSON.parse(data.get_string_from_ascii())
-	if(json.result):
+	if(!json.result):
+		return
+	if(json.result.action=="publish"):
 		print("get move: ", json.result)
 		emit_signal("get_move", "", json.result)
+	elif(json.result.action=="joinedGame"):
+		print("joined game ", json.result.gameId)
+		emit_signal("game_created", json.result.gameId)
 
 func login(username: String, password: String):
 	var query = JSON.print({"name": username, "password": password})
@@ -72,8 +78,12 @@ func make_move(gameId: String, move):
 		ws.get_peer(1).put_packet(query.to_utf8())
 
 
-
+func create_game():
+	var query = JSON.print({"action": "createGame", "settings": ""})
+	if ws.get_peer(1).is_connected_to_host():
+		ws.get_peer(1).put_packet(query.to_utf8())
 
 func _on_Timer_timeout():
-	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
-	make_move("", move)
+	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
+	#make_move("", move)
+	create_game()
