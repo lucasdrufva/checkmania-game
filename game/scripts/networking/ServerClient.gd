@@ -73,7 +73,7 @@ func _on_login_request_completed(result, response_code, headers, body):
 
 
 func make_move(gameId: String, move):
-	var query = JSON.print({"action": "publish", "message": move})
+	var query = JSON.print({"action": "makeMove", "gameId": gameId,"message": move})
 	if ws.get_peer(1).is_connected_to_host():
 		ws.get_peer(1).put_packet(query.to_utf8())
 
@@ -83,7 +83,18 @@ func create_game():
 	if ws.get_peer(1).is_connected_to_host():
 		ws.get_peer(1).put_packet(query.to_utf8())
 
+func join_game(gameId: String):
+	var query = JSON.print({"action": "joinGame", "gameId": gameId})
+	if ws.get_peer(1).is_connected_to_host():
+		ws.get_peer(1).put_packet(query.to_utf8())
+
 func _on_Timer_timeout():
 	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
 	#make_move("", move)
-	create_game()
+	#create_game()
+	join_game("2021-02-19:YMEEgr")
+
+
+func _on_Server_game_created(gameId):
+	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
+	make_move(gameId, move)
