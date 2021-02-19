@@ -3,7 +3,7 @@ extends Node
 class_name ServerApi
 
 signal get_move(gameId, move)
-signal game_created(gameId)
+signal joined_game(gameId)
 
 var ws = null
 var token = null
@@ -13,7 +13,7 @@ func _ready():
 	print("ServerClient started")
 	$HTTPRequest.connect("request_completed", self, "_on_login_request_completed")
 	_connect("ws://localhost:8080/ws")
-	login("bob", "supersecret")
+	login("alice", "supersecret")
 
 func _connect(url):
 	ws = WebSocketClient.new()
@@ -48,12 +48,12 @@ func _parse_incomming_packet(data):
 	var json = JSON.parse(data.get_string_from_ascii())
 	if(!json.result):
 		return
-	if(json.result.action=="publish"):
+	if(json.result.action=="makeMove"):
 		print("get move: ", json.result)
-		emit_signal("get_move", "", json.result)
+		emit_signal("get_move", json.result.gameId, json.result.message)
 	elif(json.result.action=="joinedGame"):
 		print("joined game ", json.result.gameId)
-		emit_signal("game_created", json.result.gameId)
+		emit_signal("joined_game", json.result.gameId)
 
 func login(username: String, password: String):
 	var query = JSON.print({"name": username, "password": password})
@@ -88,13 +88,15 @@ func join_game(gameId: String):
 	if ws.get_peer(1).is_connected_to_host():
 		ws.get_peer(1).put_packet(query.to_utf8())
 
+
+
+
 func _on_Timer_timeout():
 	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
 	#make_move("", move)
 	#create_game()
-	join_game("2021-02-19:YMEEgr")
+	join_game("2021-02-19:nRdWDf")
 
-
-func _on_Server_game_created(gameId):
+func _on_Server_joined_game(gameId):
 	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
 	make_move(gameId, move)
