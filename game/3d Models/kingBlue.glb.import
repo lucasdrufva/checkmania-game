@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/kingBlue (3).glb-d0022c6c096546c5a5eac0fca613d1c6.scn"
+path="res://.import/kingBlue.glb-c6a8ac397bda6d95fc99e0aecc71ccf9.scn"
 
 [deps]
 
-source_file="res://3d Models/kingBlue (3).glb"
-dest_files=[ "res://.import/kingBlue (3).glb-d0022c6c096546c5a5eac0fca613d1c6.scn" ]
+source_file="res://3d Models/kingBlue.glb"
+dest_files=[ "res://.import/kingBlue.glb-c6a8ac397bda6d95fc99e0aecc71ccf9.scn" ]
 
 [params]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://3d Models/towerRed (5).glb" type="PackedScene" id=1]
+[ext_resource path="res://3d Models/towerRed.glb" type="PackedScene" id=1]
 
 [node name="Tower_Red" type="StaticBody"]
 

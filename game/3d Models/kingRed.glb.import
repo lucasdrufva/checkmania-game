@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/cubeRed (4).glb-015dab2d577f1ca66b0bca5d1c434c72.scn"
+path="res://.import/kingRed.glb-b461232b357ac90db254dbcb8ea6144c.scn"
 
 [deps]
 
-source_file="res://3d Models/cubeRed (4).glb"
-dest_files=[ "res://.import/cubeRed (4).glb-015dab2d577f1ca66b0bca5d1c434c72.scn" ]
+source_file="res://3d Models/kingRed.glb"
+dest_files=[ "res://.import/kingRed.glb-b461232b357ac90db254dbcb8ea6144c.scn" ]
 
 [params]
 

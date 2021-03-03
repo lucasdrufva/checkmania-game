@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/cubeBlue (3).glb-f49bfd39d6ad7f69be68b7eefb1adc16.scn"
+path="res://.import/cubeBlue.glb-50ead830bed6c56027f3c9483b29015e.scn"
 
 [deps]
 
-source_file="res://3d Models/cubeBlue (3).glb"
-dest_files=[ "res://.import/cubeBlue (3).glb-f49bfd39d6ad7f69be68b7eefb1adc16.scn" ]
+source_file="res://3d Models/cubeBlue.glb"
+dest_files=[ "res://.import/cubeBlue.glb-50ead830bed6c56027f3c9483b29015e.scn" ]
 
 [params]
 
