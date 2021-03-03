@@ -98,5 +98,6 @@ func _on_Timer_timeout():
 	join_game("2021-02-19:nRdWDf")
 
 func _on_Server_joined_game(gameId):
-	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
-	make_move(gameId, move)
+	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
+	#make_move(gameId, move)
+	print("joined game!: ", gameId)
