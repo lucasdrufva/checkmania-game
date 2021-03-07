@@ -10,10 +10,12 @@ var token = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	connect("joined_game", get_parent(), '_on_Server_joined_game')
+	connect("get_move", get_parent(), '_on_Server_get_move')
 	print("ServerClient started")
 	$HTTPRequest.connect("request_completed", self, "_on_login_request_completed")
 	_connect("ws://localhost:8080/ws")
-	login("alice", "supersecret")
+	#login("alice", "supersecret")
 
 func _connect(url):
 	ws = WebSocketClient.new()
@@ -95,8 +97,10 @@ func _on_Timer_timeout():
 	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
 	#make_move("", move)
 	#create_game()
-	join_game("2021-02-19:nRdWDf")
+	join_game("2021-03-07:dQanfD")
+	pass
 
 func _on_Server_joined_game(gameId):
-	var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
-	make_move(gameId, move)
+	#var move = {"source": "from", "destination":"to", "timestamp": str(OS.get_unix_time())}
+	#make_move(gameId, move)
+	print("joined game!: ", gameId)
