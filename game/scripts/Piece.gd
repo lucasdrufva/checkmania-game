@@ -10,9 +10,9 @@ export(colors) var color
 export(bool) var selected = false setget set_selected
 export(String) var id
 
-var kingBlue = preload("res://scenes/Pieces/kingBlue.tscn")
-var towerBlue = preload("res://scenes/Pieces/cubeRed.tscn")
-var cubeBlue = preload("res://scenes/Pieces/cubeBlue.tscn")
+var kingBlue = preload("res://scenes/Pieces/KingBlue.tscn")
+var towerBlue = preload("res://scenes/Pieces/CubeRed.tscn")
+var cubeBlue = preload("res://scenes/Pieces/CubeBlue.tscn")
 
 var instance
 

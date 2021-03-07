@@ -1,6 +1,10 @@
 extends Spatial
 
-var layout = [[null, null, null, null, null], [null, null, "C", null, null],[null, "T", null, null, null],[null, null, null, null, null],[null, null, null, null, null],]
+var layout = [[null, null, null, null, null], 
+			[null, null, "C", null, null],
+			[null, "T", null, null, null],
+			[null, null, null, null, null],
+			[null, null, null, null, null],]
 
 var board = []
 
@@ -10,7 +14,7 @@ var player = 0
 
 
 var piece = preload("res://scenes/Piece.tscn")
-var moveIndicator = preload("res://scenes/moveIndicator.tscn")
+var moveIndicator = preload("res://scenes/MoveIndicator.tscn")
 
 var server = preload("res://scenes/Network.tscn").instance()
 
