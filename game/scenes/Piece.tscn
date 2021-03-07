@@ -3,6 +3,7 @@
 [ext_resource path="res://scripts/Piece.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
+extents = Vector3( 1.37079, 2.50676, 1.31923 )
 
 [node name="Piece" type="Area"]
 script = ExtResource( 1 )

@@ -1,10 +1,12 @@
 extends Spatial
 
-var layout = [[null, null], [null, null], ["C", null], [null, null], [null, "K"], [null, null]]
+var layout = [[null, null, null, null, null], [null, null, "C", null, null],[null, "T", null, null, null],[null, null, null, null, null],[null, null, null, null, null],]
 
 var board = []
 
 var gameId = ""
+var currentTurn = 0
+var player = 0
 
 
 var piece = preload("res://scenes/Piece.tscn")
@@ -30,6 +32,8 @@ func createBoard(layout):
 				board[x][y].id = str(x) + str(y)
 				if layout[x][y] == "C":
 					board[x][y].pieceType = 2
+				elif layout[x][y] == "T":
+					board[x][y].pieceType = 1
 				
 				add_child(board[x][y])
 			else:
@@ -90,12 +94,24 @@ func move(source, destination):
 	board[sourceRow][sourceCol] = null
 	board[destinationRow][destinationCol].transform.origin = Vector3(destinationRow*5, 0, destinationCol*5)
 	board[destinationRow][destinationCol].id = str(destinationRow) + str(destinationCol)
+	
+	
+	
+	currentTurn = (currentTurn +1)%2
+	if currentTurn:
+		get_parent().get_node("Camera").direction = (get_parent().get_node("Camera").direction +1)%4
+	print("current turn ", currentTurn)
 
 func getMoves(source):
 	var move1 = source
-	move1[0] = String(int(move1[0])+1)
 	var move2 = source
-	move2[0] = String(int(move2[0])-1)
+	if(get_parent().get_node("Camera").direction%2==0):
+		move1[0] = String(int(move1[0])+1)
+		move2[0] = String(int(move2[0])-1)
+	else:
+		move1[1] = String(int(move1[1])+1)
+		move2[1] = String(int(move2[1])-1)
+	
 	return [move1, move2]
 
 
