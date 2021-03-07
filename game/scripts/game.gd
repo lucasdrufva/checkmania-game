@@ -118,8 +118,11 @@ func get_moves(source):
 	return [move1, move2]
 
 func destination_is_piece(destination):
-	if(board[int(destination[0])][int(destination[1])] != null):
-		return true
+	var d0 = int(destination[0])
+	var d1 = int(destination[1])
+	if(d0 >= 0 && d0 <= board.size() - 1 && d1 >= 0 && d1 <= board[0].size() - 1):
+		if(board[int(destination[0])][int(destination[1])] != null):
+			return true
 	return false
 
 #server stuff

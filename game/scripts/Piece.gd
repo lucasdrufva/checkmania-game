@@ -11,8 +11,12 @@ export(bool) var selected = false setget set_selected
 export(String) var id
 
 var kingBlue = preload("res://scenes/Pieces/KingBlue.tscn")
-var towerBlue = preload("res://scenes/Pieces/CubeRed.tscn")
+var towerBlue = preload("res://scenes/Pieces/TowerBlue.tscn")
 var cubeBlue = preload("res://scenes/Pieces/CubeBlue.tscn")
+
+var kingRed = preload("res://scenes/Pieces/KingBlue.tscn")
+var towerRed = preload("res://scenes/Pieces/CubeRed.tscn")
+var cubeRed = preload("res://scenes/Pieces/CubeBlue.tscn")
 
 var instance
 
@@ -26,15 +30,23 @@ func set_selected(value):
 func _ready():
 	#TODO add other pieces
 	if pieceType == pieceTypes.king:
-		instance = kingBlue.instance()
-		add_child(instance)
+		if(color) == colors.blue:
+			instance = kingBlue.instance()
+		else:
+			instance = kingRed.instance()
 	elif pieceType == pieceTypes.tower:
-		instance = towerBlue.instance()
-		add_child(instance)
+		if(color) == colors.blue:
+			instance = towerBlue.instance()
+		else:
+			instance = towerRed.instance()
 	else:
-		instance = cubeBlue.instance()
-		add_child(instance)
-		
+		if(color) == colors.blue:
+			instance = cubeBlue.instance()
+		else:
+			instance = cubeRed.instance()
+	
+	add_child(instance)
+	
 	print("spawned!", pieceType)
 	print(str(OS.get_unix_time()))
 	
