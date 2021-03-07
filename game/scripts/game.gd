@@ -22,7 +22,7 @@ var server = preload("res://scenes/Network.tscn").instance()
 func _ready():
 	add_child(server)
 	createBoard(layout)
-	server.login("alice", "supersecret")
+	#server.login("alice", "supersecret")
 	
 
 func createBoard(layout):
