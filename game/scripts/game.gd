@@ -2,7 +2,7 @@ extends Spatial
 
 var layout = [[null, null, null, null, null], 
 			[null, null, "C", null, null],
-			[null, "T", null, null, null],
+			[null, null, "T", null, null],
 			[null, null, null, null, null],
 			[null, null, null, null, null],]
 
@@ -54,22 +54,18 @@ func piece_selected(id):
 					piece.selected = false
 	
 	
-	var legalMoves = getMoves(id)
+	var legalMoves = get_moves(id)
 	var moveIndicators = []
 	
 	for legalMove in legalMoves:
 		moveIndicators.append(moveIndicator.instance())
-		moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(legalMove[0])*5, 0, int(legalMove[1])*5)
+		if(destination_is_piece(legalMove)):
+			moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(legalMove[0])*5, 5, int(legalMove[1])*5)
+		else:
+			moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(legalMove[0])*5, 0, int(legalMove[1])*5)
 		moveIndicators[moveIndicators.size()-1].id = legalMove
 		add_child(moveIndicators[moveIndicators.size()-1])
 	
-	#fake movement
-	
-#	yield(get_tree().create_timer(2), "timeout")
-#	moveInd.queue_free()
-#	var destination = id
-#	destination[0] = String(int(destination[0])+1)
-#	move(id, destination)
 
 func destination_selected(destination):
 	for x in range(0, board.size()):
@@ -94,6 +90,9 @@ func move(source, destination):
 	print(sourceRow, sourceCol, destinationRow, destinationCol)
 	
 	board[sourceRow][sourceCol].selected = false
+	if(destination_is_piece(destination)):
+		board[destinationRow][destinationCol].kill()
+	board[destinationRow][destinationCol] = null
 	board[destinationRow][destinationCol] = board[sourceRow][sourceCol]
 	board[sourceRow][sourceCol] = null
 	board[destinationRow][destinationCol].transform.origin = Vector3(destinationRow*5, 0, destinationCol*5)
@@ -106,7 +105,7 @@ func move(source, destination):
 		get_parent().get_node("Camera").direction = (get_parent().get_node("Camera").direction +1)%4
 	print("current turn ", currentTurn)
 
-func getMoves(source):
+func get_moves(source):
 	var move1 = source
 	var move2 = source
 	if(get_parent().get_node("Camera").direction%2==0):
@@ -118,7 +117,10 @@ func getMoves(source):
 	
 	return [move1, move2]
 
-
+func destination_is_piece(destination):
+	if(board[int(destination[0])][int(destination[1])] != null):
+		return true
+	return false
 
 #server stuff
 func _on_Server_joined_game(game):

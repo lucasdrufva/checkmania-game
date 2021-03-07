@@ -40,6 +40,8 @@ func _ready():
 	
 	connect("selected", get_parent(), 'piece_selected')
 
+func kill():
+	queue_free()
 
 func _input_event(object, event, click_position, click_normal, shape):
 	if event is InputEventMouseButton:
