@@ -1,14 +1,15 @@
 extends Spatial
 
+var utils = preload("res://scripts/Utils.gd")
+onready var logic =  get_node("/root/Logic")
+onready var server = get_node("/root/Network")
+
+var layout = utils.notation_to_array("5ct/TC5/5ck/TC5/5ct/KC5/5ct/TC5")
 #var layout = [[null, null, null, null, null], 
 #			[null, null, "C", null, null],
 #			[null, null, "T", null, null],
 #			[null, null, null, null, null],
 #			[null, null, null, null, null],]
-var utils = preload("res://scripts/Utils.gd")
-onready var logic =  get_node("/root/Logic")
-
-var layout = utils.notation_to_array("5ct/TC5/5ck/TC5/5ct/KC5/5ct/TC5")
 
 var board = []
 
@@ -19,8 +20,6 @@ var player = 0
 
 var piece = preload("res://scenes/Piece.tscn")
 var moveIndicator = preload("res://scenes/MoveIndicator.tscn")
-
-var server = preload("res://scenes/Network.tscn").instance()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
