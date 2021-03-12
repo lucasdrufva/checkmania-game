@@ -1,15 +1,19 @@
 extends Spatial
 
-var layout = [[null, null, null, null, null], 
-			[null, null, "C", null, null],
-			[null, null, "T", null, null],
-			[null, null, null, null, null],
-			[null, null, null, null, null],]
+#var layout = [[null, null, null, null, null], 
+#			[null, null, "C", null, null],
+#			[null, null, "T", null, null],
+#			[null, null, null, null, null],
+#			[null, null, null, null, null],]
+var utils = preload("res://scripts/Utils.gd")
+onready var logic =  get_node("/root/Logic")
+
+var layout = utils.notation_to_array("5ct/TC5/5ck/TC5/5ct/KC5/5ct/TC5")
 
 var board = []
 
 var gameId = ""
-var currentTurn = 0
+
 var player = 0
 
 
@@ -20,6 +24,7 @@ var server = preload("res://scenes/Network.tscn").instance()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print(layout)
 	add_child(server)
 	createBoard(layout)
 	#server.login("alice", "supersecret")
@@ -34,9 +39,12 @@ func createBoard(layout):
 				
 				board[x][y].transform.origin = Vector3(x*5, 0, y*5)
 				board[x][y].id = str(x) + str(y)
-				if layout[x][y] == "C":
+				
+				board[x][y].pieceType = logic.get_piece_type(layout[x][y])
+				board[x][y].color = logic.get_color(layout[x][y])
+				if layout[x][y].to_upper() == "C":
 					board[x][y].pieceType = 2
-				elif layout[x][y] == "T":
+				elif layout[x][y].to_upper() == "T":
 					board[x][y].pieceType = 1
 				
 				add_child(board[x][y])
@@ -54,15 +62,19 @@ func piece_selected(id):
 					piece.selected = false
 	
 	
-	var legalMoves = get_moves(id)
+	print("time to get moves")
+	var legalMoves = logic.get_moves(board, id)
 	var moveIndicators = []
+	
+	print(legalMoves)
 	
 	for legalMove in legalMoves:
 		moveIndicators.append(moveIndicator.instance())
-		if(destination_is_piece(legalMove)):
-			moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(legalMove[0])*5, 5, int(legalMove[1])*5)
-		else:
-			moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(legalMove[0])*5, 0, int(legalMove[1])*5)
+		var indicatorPos = logic.indicator_pos(legalMove)
+		var indicatorHeight = 0
+		if(logic.destination_is_piece(board, legalMove)):
+			indicatorHeight = 5
+		moveIndicators[moveIndicators.size()-1].transform.origin = Vector3(int(indicatorPos[0])*5, indicatorHeight, int(indicatorPos[1])*5)
 		moveIndicators[moveIndicators.size()-1].id = legalMove
 		add_child(moveIndicators[moveIndicators.size()-1])
 	
@@ -75,6 +87,7 @@ func destination_selected(destination):
 					var move = {"source": piece.id, "destination":destination, "timestamp": str(OS.get_unix_time())}
 					server.make_move(gameId, move)
 					move(piece.id, destination)
+					logic.make_move()
 					break
 	
 	for child in self.get_children(): 
@@ -90,7 +103,7 @@ func move(source, destination):
 	print(sourceRow, sourceCol, destinationRow, destinationCol)
 	
 	board[sourceRow][sourceCol].selected = false
-	if(destination_is_piece(destination)):
+	if(logic.destination_is_piece(board, destination)):
 		board[destinationRow][destinationCol].kill()
 	board[destinationRow][destinationCol] = null
 	board[destinationRow][destinationCol] = board[sourceRow][sourceCol]
@@ -100,10 +113,10 @@ func move(source, destination):
 	
 	
 	
-	currentTurn = (currentTurn +1)%2
-	if currentTurn:
-		get_parent().get_node("Camera").direction = (get_parent().get_node("Camera").direction +1)%4
-	print("current turn ", currentTurn)
+	#currentTurn = (currentTurn +1)%2
+	#if currentTurn:
+	#	get_parent().get_node("Camera").direction = (get_parent().get_node("Camera").direction +1)%4
+	print("current turn ", logic.currentTurn)
 
 func get_moves(source):
 	var move1 = source

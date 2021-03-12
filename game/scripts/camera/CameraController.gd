@@ -10,6 +10,8 @@ var cw = true
 var wait = 0
 var w = false
 
+onready var logic =  get_node("/root/Logic")
+
 func set_direction(value):
 	direction = value
 	target = 1.58*direction
@@ -18,7 +20,7 @@ func set_direction(value):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	logic.register_camera(self)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
