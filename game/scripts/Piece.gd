@@ -14,9 +14,9 @@ var kingBlue = preload("res://scenes/Pieces/KingBlue.tscn")
 var towerBlue = preload("res://scenes/Pieces/TowerBlue.tscn")
 var cubeBlue = preload("res://scenes/Pieces/CubeBlue.tscn")
 
-var kingRed = preload("res://scenes/Pieces/KingBlue.tscn")
-var towerRed = preload("res://scenes/Pieces/CubeRed.tscn")
-var cubeRed = preload("res://scenes/Pieces/CubeBlue.tscn")
+var kingRed = preload("res://scenes/Pieces/KingRed.tscn")
+var towerRed = preload("res://scenes/Pieces/TowerRed.tscn")
+var cubeRed = preload("res://scenes/Pieces/CubeRed.tscn")
 
 var instance
 

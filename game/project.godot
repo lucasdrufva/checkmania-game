@@ -13,16 +13,28 @@ _global_script_classes=[ {
 "class": "ServerApi",
 "language": "GDScript",
 "path": "res://scripts/networking/ServerClient.gd"
+}, {
+"base": "Node",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://scripts/Utils.gd"
 } ]
 _global_script_class_icons={
-"ServerApi": ""
+"ServerApi": "",
+"Utils": ""
 }
 
 [application]
 
 config/name="checkmania"
 run/main_scene="res://scenes/GameScene.tscn"
+boot_splash/bg_color=Color( 0.356863, 0.356863, 0.356863, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+Logic="*res://scripts/Logic.gd"
+Network="*res://scenes/Network.tscn"
 
 [rendering]
 

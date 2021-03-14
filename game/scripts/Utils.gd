@@ -5,12 +5,13 @@ extends Node
 # var a = 2
 # var b = "text"
 
+class_name Utils
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-func notation_to_array(source):
+static func notation_to_array(source):
 	var board = []
 	for block in source.split("/"):
 		var layer = []
@@ -23,7 +24,7 @@ func notation_to_array(source):
 		board.append(layer)
 	return board
 
-func array_to_notation(source):
+static func array_to_notation(source):
 	var notation = ""
 	for layerIndex in range(0, source.size()):
 		var layer = source[layerIndex]
