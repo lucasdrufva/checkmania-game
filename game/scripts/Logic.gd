@@ -29,8 +29,13 @@ func get_moves(newBoard, source):
 			move2[0] = String(int(move2[0])-1)
 			move2[1] = String(int(move2[1])+frontBack)
 		else:
+			var frontBack = -1
+			if(cameraNode.direction==3):
+				frontBack = 1		
 			move1[1] = String(int(move1[1])+1)
+			move1[0] = String(int(move1[0])+frontBack)
 			move2[1] = String(int(move2[1])-1)
+			move2[0] = String(int(move2[0])+frontBack)
 
 	else:
 		if(cameraNode.direction%2==0):
