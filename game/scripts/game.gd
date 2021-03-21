@@ -51,6 +51,14 @@ func createBoard(layout):
 				board[x].append(null)
 
 func piece_selected(id):
+	if(!logic.isYourTurn()):
+		print("not your turn")
+		#disabled for debugging
+		#return
+	
+	if(!logic.isColorsTurn(board, id)):
+		return
+	
 	print("piece selected ", id)
 	
 	#deselect other pieces
@@ -115,7 +123,7 @@ func move(source, destination):
 	#currentTurn = (currentTurn +1)%2
 	#if currentTurn:
 	#	get_parent().get_node("Camera").direction = (get_parent().get_node("Camera").direction +1)%4
-	print("current turn ", logic.currentTurn)
+	print("current turn ", logic.currentPlayer, logic.currentTurn)
 
 func get_moves(source):
 	var move1 = source

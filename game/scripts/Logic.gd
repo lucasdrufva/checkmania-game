@@ -4,9 +4,18 @@ var board = []
 
 enum players {red, blue}
 
-var currentTurn = players.red
-
 var cameraNode = null
+
+var currentTurn = 0 setget next_turn
+
+var currentPlayer = players.red
+
+export var playerColor = players.red
+
+func next_turn(new_value):
+	currentTurn = new_value
+	currentPlayer = currentTurn%2
+	print("next turn", currentPlayer, currentTurn)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,7 +80,7 @@ func indicator_pos(pos):
 	return [position[0], position[1]]
 
 func make_move():
-	currentTurn += 1
+	self.currentTurn += 1
 	cameraNode.direction = int(floor((currentTurn%8)/2))
 
 func register_camera(camera):
@@ -89,3 +98,12 @@ func get_color(notation):
 		return 1
 	return 0
 
+func isYourTurn():
+	print("current player ", currentPlayer)
+	return playerColor == currentPlayer
+
+func isColorsTurn(newBoard, id):
+	board = newBoard
+	if(board[int(id[0])][int(id[1])].color == currentPlayer):
+		return true
+	return false
