@@ -18,12 +18,27 @@ func get_moves(newBoard, source):
 	board = newBoard
 	var move1 = source
 	var move2 = source
-	if(cameraNode.direction%2==0):
-		move1[0] = String(int(move1[0])+1)
-		move2[0] = String(int(move2[0])-1)
+	#Tower
+	if(board[int(source[0])][int(source[1])].pieceType == 1):
+		if(cameraNode.direction%2==0):
+			var frontBack = -1
+			if(cameraNode.direction==2):
+				frontBack = 1				
+			move1[0] = String(int(move1[0])+1)
+			move1[1] = String(int(move1[1])+frontBack)
+			move2[0] = String(int(move2[0])-1)
+			move2[1] = String(int(move2[1])+frontBack)
+		else:
+			move1[1] = String(int(move1[1])+1)
+			move2[1] = String(int(move2[1])-1)
+
 	else:
-		move1[1] = String(int(move1[1])+1)
-		move2[1] = String(int(move2[1])-1)
+		if(cameraNode.direction%2==0):
+			move1[0] = String(int(move1[0])+1)
+			move2[0] = String(int(move2[0])-1)
+		else:
+			move1[1] = String(int(move1[1])+1)
+			move2[1] = String(int(move2[1])-1)
 	
 	print("return:" , [move1, move2])
 	return [move1, move2]

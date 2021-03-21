@@ -8,6 +8,7 @@
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.70615, 49.8639 )
+visible = false
 keep_aspect = 0
 projection = 1
 size = 34.1456
@@ -18,3 +19,6 @@ script = ExtResource( 3 )
 [node name="gameBoard" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4642, 0, -14.9541 )
 script = ExtResource( 2 )
+
+[node name="Camera2" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.0520919, 0.998642, 0, -0.998642, 0.0520919, 0, 28.5207, 0 )
